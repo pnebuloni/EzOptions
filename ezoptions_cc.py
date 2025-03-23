@@ -1718,7 +1718,7 @@ def main():
     
             # Add refresh rate control before chart type
             if 'refresh_rate' not in st.session_state:
-                st.session_state.refresh_rate = 10  # Default refresh rate
+                st.session_state.refresh_rate = 30  # Default refresh rate
             
             new_refresh_rate = st.number_input(
                 "Auto-Refresh Rate (seconds)",
