@@ -27,7 +27,7 @@ def run_ezoptions():
     logging.info("Running ezoptions.py via Streamlit...")
     try:
         # Use sys.executable to ensure we use the same Python that’s running the script
-        subprocess.check_call([sys.executable, "-m", "streamlit", "run", "https://raw.githubusercontent.com/EazyDuz1t/EzOptions/refs/heads/main/ezoptions.py"])
+        subprocess.check_call([sys.executable, "-m", "streamlit", "run", "https://raw.githubusercontent.com/pnebuloni/EzOptions/refs/heads/main/ezoptions.py"])
         logging.info("Successfully ran ezoptions.py using Streamlit.")
     except subprocess.CalledProcessError as e:
         logging.error(f"Error running ezoptions.py: {e}")
