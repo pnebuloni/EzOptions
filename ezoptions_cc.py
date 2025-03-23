@@ -36,8 +36,8 @@ def main():
             pass
 
 
-    with st_thread_context():
-        st.set_page_config(layout="wide")
+    # with st_thread_context():
+        # st.set_page_config(layout="wide")
     
     # Initialize session state for colors if not already set
     if 'call_color' not in st.session_state:
