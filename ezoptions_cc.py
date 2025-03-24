@@ -896,8 +896,9 @@ def main():
     
         fig_oi = px.bar(
             combined,
-            x='strike',
-            y='openInterest',
+            y='strike',
+            x='openInterest',
+            orientation='h',
             color='OptionType',
             title='Open Interest by Strike',
             barmode='relative',
@@ -1923,10 +1924,11 @@ def main():
         if (st.session_state.show_calls):
             if st.session_state.chart_type == 'Bar':
                 fig.add_trace(go.Bar(
-                    x=calls_df['strike'],
-                    y=calls_df[exposure_type],
+                    x=calls_df[exposure_type],
+                    y=calls_df['strike'],
                     name='Call',
-                    marker_color=call_color
+                    marker_color=call_color,
+                    orientation='h'
                 ))
             elif st.session_state.chart_type == 'Scatter':
                 fig.add_trace(go.Scatter(
@@ -1959,10 +1961,11 @@ def main():
         if st.session_state.show_puts:
             if st.session_state.chart_type == 'Bar':
                 fig.add_trace(go.Bar(
-                    x=puts_df['strike'],
-                    y=puts_df[exposure_type],
+                    x=puts_df[exposure_type],
+                    y=puts_df['strike'],
                     name='Put',
-                    marker_color=put_color
+                    marker_color=put_color,
+                    orientation='h'
                 ))
             elif st.session_state.chart_type == 'Scatter':
                 fig.add_trace(go.Scatter(
@@ -2086,11 +2089,11 @@ def main():
                 font=dict(size=st.session_state.chart_text_size + 8)  # Title slightly larger
             ),
             xaxis_title=dict(
-                text='Strike Price',
+                text=title,
                 font=dict(size=st.session_state.chart_text_size)
             ),
             yaxis_title=dict(
-                text=title,
+                text='Strike Price',
                 font=dict(size=st.session_state.chart_text_size)
             ),
             legend=dict(
