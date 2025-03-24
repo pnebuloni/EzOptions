@@ -1905,7 +1905,21 @@ def main():
             net_exposure = calls_filtered.groupby('strike')[exposure_type].sum() + puts_filtered.groupby('strike')[exposure_type].sum()
         else:  # VEX, Charm, Speed, Vomma
             net_exposure = calls_filtered.groupby('strike')[exposure_type].sum() + puts_filtered.groupby('strike')[exposure_type].sum()
-    
+
+        zero_cross_strike = None
+        try:
+            strikes = net_exposure.index.values
+            values = net_exposure.values
+            for i in range(1, len(values)):
+                if values[i-1] * values[i] < 0:  # Cambio de signo
+                    x0, x1 = strikes[i-1], strikes[i]
+                    y0, y1 = values[i-1], values[i]
+                    zero_cross_strike = x0 - y0 * (x1 - x0) / (y1 - y0)  # Interpolación lineal
+                    break
+        except Exception as e:
+            print(f"Error computing zero gamma strike: {e}")
+            zero_cross_strike = None
+
         # Calculate total Greek values
         total_call_value = calls_df[exposure_type].sum()
         total_put_value = puts_df[exposure_type].sum()
@@ -1918,7 +1932,10 @@ def main():
         )
     
         fig = go.Figure()
-    
+
+        if zero_cross_strike is not None:
+            fig.add_vline(x=zero_cross_strike, line_dash="dash", line_color="blue", opacity=0.6)
+
         # Add calls if enabled
         if (st.session_state.show_calls):
             if st.session_state.chart_type == 'Bar':
